@@ -1,47 +1,42 @@
 
+var popBottles = {
 
-function test() {
+  investment: 10,
+  fullBottles: 5,
+  totalReturn: 0,
+  emptyBottles: 0,
+  caps: 0,
 
-  var investment = 10;
+  calcInvestment: function(fullBottles) {
 
-  var fullBottles = investment / 2;
-  var returnOnInvestment = fullBottles;
-  var emptyBottles = 0;
-  var caps = 0;
+    if (fullBottles <= 0){
+      return;
+    }
 
-  popBottles(fullBottles);
+    this.emptyBottles += fullBottles;
+    this.caps += fullBottles;
+    this.fullBottles = 0;
 
-}
+    if (this.emptyBottles > 2) {
+      this.fullBottles += Math.floor(this.emptyBottles / 2);
+      this.emptyBottles -= Math.floor(this.emptyBottles / 2) * 2;
+      this.returnOnInvestment += Math.floor(this.emptyBottles / 2);
+    }
+
+    if (this.caps > 4) {
+      this.fullBottles += Math.floor(this.caps / 4);
+      this.caps -= Math.floor(this.caps /4);
+      this.returnOnInvestment += Math.floor(this.caps /4);
+    }
 
 
+    return this.calcInvestment(this.fullBottles);
 
-function popBottles(fullBottles) {
-
-  if (fullBottles <= 0){
-    return;
   }
 
-  emptyBottles += fullBottles;
-  caps += fullBottles;
-
-  if (emptyBottles > 2) {
-    fullBottles += Math.floor(emptyBottles / 2);
-    emptyBottles -= Math.floor(emptyBottles / 2);
-    returnOnInvestment += Math.floor(emptyBottles / 2);
-  }
-
-  if (caps > 4) {
-    fullBottles += Math.floor(caps / 4);
-    caps -= Math.floor(caps /4);
-    returnOnInvestment += Math.floor(caps /4);
-  }
+};
 
 
-  return popBottles(fullBottles);
+popBottles.calcInvestment(popBottles.fullBottles);
 
-}
-
-
-test();
-
-console.log(fullBottles, emptyBottles, caps);
+console.log(popBottles.fullBottles, popBottles.emptyBottles, popBottles.caps);
